@@ -1,0 +1,321 @@
+openapi: 3.1.0
+info:
+  title: Viral Recipe Aggregation API
+  version: 0.1.0
+  description: >
+    REST endpoints consumed by the Viral Recipes Flutter client for feed,
+    recipe detail, and submission workflows.
+servers:
+  - url: https://api.viral-recipes.app/v1
+    description: Production
+  - url: https://staging.api.viral-recipes.app/v1
+    description: Staging
+tags:
+  - name: Recipes
+  - name: Submissions
+paths:
+  /recipes:
+    get:
+      tags: [Recipes]
+      summary: List viral recipes
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+        - in: query
+          name: cursor
+          schema:
+            type: string
+            description: Opaque pagination cursor
+        - in: query
+          name: tag
+          schema:
+            type: string
+            description: Filter by tag (e.g., cuisine, dietary)
+        - in: query
+          name: platform
+          schema:
+            type: string
+            enum: [tiktok, instagram, youtube, other]
+      responses:
+        "200":
+          description: Paginated recipe list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeCollection'
+        "429":
+          description: Rate limit exceeded
+  /recipes/{id}:
+    get:
+      tags: [Recipes]
+      summary: Fetch recipe details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Recipe detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        "404":
+          description: Recipe not found
+  /recipes/{id}/transcript:
+    get:
+      tags: [Recipes]
+      summary: Retrieve caption or transcript for a recipe video
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Transcript payload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transcript:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        startSeconds:
+                          type: number
+                        endSeconds:
+                          type: number
+                        text:
+                          type: string
+                  language:
+                    type: string
+                  confidence:
+                    type: number
+        "404":
+          description: Transcript unavailable
+  /submissions:
+    post:
+      tags: [Submissions]
+      summary: Submit a viral recipe video URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [videoUrl]
+              properties:
+                videoUrl:
+                  type: string
+                  format: uri
+                contactEmail:
+                  type: string
+                  format: email
+                notes:
+                  type: string
+      responses:
+        "202":
+          description: Submission accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission'
+        "400":
+          description: Unsupported URL or validation error
+  /submissions/{id}:
+    get:
+      tags: [Submissions]
+      summary: Check submission status
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Submission status payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission'
+        "404":
+          description: Submission not found
+components:
+  schemas:
+    RecipeCollection:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeSummary'
+        nextCursor:
+          type: string
+          nullable: true
+    RecipeSummary:
+      type: object
+      required: [id, title, heroImageUrl, confidence, platform, tags]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        heroImageUrl:
+          type: string
+          format: uri
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        platform:
+          type: string
+          enum: [tiktok, instagram, youtube, other]
+        tags:
+          type: array
+          items:
+            type: string
+        summary:
+          type: string
+        durationSeconds:
+          type: integer
+        viewCount:
+          type: integer
+    Recipe:
+      allOf:
+        - $ref: '#/components/schemas/RecipeSummary'
+        - type: object
+          required: [ingredients, instructions, videoSource]
+          properties:
+            ingredients:
+              type: array
+              items:
+                $ref: '#/components/schemas/Ingredient'
+            instructions:
+              type: array
+              items:
+                $ref: '#/components/schemas/InstructionStep'
+            nutrition:
+              $ref: '#/components/schemas/NutritionInfo'
+              nullable: true
+            videoSource:
+              $ref: '#/components/schemas/VideoSource'
+            transcriptAvailable:
+              type: boolean
+    Ingredient:
+      type: object
+      required: [id, name, confidence]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: number
+          nullable: true
+        unit:
+          type: string
+          nullable: true
+        preparation:
+          type: string
+          nullable: true
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+    InstructionStep:
+      type: object
+      required: [id, order, description, confidence]
+      properties:
+        id:
+          type: string
+        order:
+          type: integer
+          minimum: 1
+        description:
+          type: string
+        timestampSeconds:
+          type: integer
+          nullable: true
+        mediaSnapshotUrl:
+          type: string
+          format: uri
+          nullable: true
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+    NutritionInfo:
+      type: object
+      properties:
+        calories:
+          type: integer
+        proteinGrams:
+          type: number
+        carbsGrams:
+          type: number
+        fatGrams:
+          type: number
+        servings:
+          type: integer
+        notes:
+          type: string
+    VideoSource:
+      type: object
+      required: [id, platform, creatorHandle, sourceUrl, publishedAt, status]
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          enum: [tiktok, instagram, youtube, other]
+        creatorHandle:
+          type: string
+        sourceUrl:
+          type: string
+          format: uri
+        publishedAt:
+          type: string
+          format: date-time
+        durationSeconds:
+          type: integer
+        viewCount:
+          type: integer
+        status:
+          type: string
+          enum: [active, removed, private]
+    Submission:
+      type: object
+      required: [id, videoUrl, status, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+        videoUrl:
+          type: string
+          format: uri
+        status:
+          type: string
+          enum: [pending, processing, published, failed]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        estimatedCompletionMinutes:
+          type: integer
+          nullable: true
+        failureReason:
+          type: string
+          nullable: true

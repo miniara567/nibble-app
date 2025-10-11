@@ -31,7 +31,11 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **P1 · Cross-Platform Flutter UX**: Document responsive breakpoints, accessibility plan (WCAG 2.1 AA checks), and golden test coverage for visual states.
+- **P2 · Comprehensible Feature Modules**: Specify feature directory layout, chosen state management (default Riverpod), and anticipated complexity hotspots with mitigation.
+- **P3 · Documentation Is a Deliverable**: List the docs to create/update (e.g., `docs/<feature>/README.md`) and call out any API surfaces needing DartDoc.
+- **P4 · Test the Experience**: Outline required unit, widget/integration, and golden tests plus the coverage target for the feature.
+- **P5 · Sustainable Delivery**: Describe feature flags, rollout/rollback steps, telemetry, and performance budgets to validate before release.
 
 ## Project Structure
 

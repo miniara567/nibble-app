@@ -20,6 +20,8 @@
   - Demonstrated to users independently
 -->
 
+Each acceptance scenario MUST state how the story is validated on both mobile (phone/tablet) and desktop web, and cite the accessibility heuristics (WCAG 2.1 AA) being checked.
+
 ### User Story 1 - [Brief Title] (Priority: P1)
 
 [Describe this user journey in plain language]
@@ -74,6 +76,8 @@
 
 - What happens when [boundary condition]?
 - How does system handle [error scenario]?
+- How is behavior verified across devices/breakpoints?
+- What accessibility fallback is provided if [assistive technology constraint]?
 
 ## Requirements *(mandatory)*
 
@@ -113,3 +117,10 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+
+## Documentation & Accessibility Deliverables *(mandatory)*
+
+- **Docs**: Update/create `docs/[feature]/README.md` covering feature overview, setup, and decision log entries.
+- **DartDoc**: List new/changed public APIs that require `///` summaries and note any intentional omissions with justification.
+- **Accessibility**: Define the manual/automated checks (focus order, screen reader text, contrast, gestures) and artifacts (e.g., golden screenshots) needed for sign-off.
+- **Rollout & Telemetry**: Describe feature flags, analytics events, and performance budgets that must be configured prior to release.
