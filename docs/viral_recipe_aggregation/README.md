@@ -23,3 +23,10 @@ Additional implementation details will be appended as features evolve.
 - Repository: `FeedRepository` (`lib/features/feed/data/feed_repository.dart`) attempts real API calls, falls back to cached data, and seeds curated sample data when offline.
 - Telemetry: `AnalyticsService.logFeedView` invoked after each successful fetch; feature flag gating respects Remote Config `viral_recipes_feed_enabled` when available.
 - Tests: `test/unit/feed/feed_repository_test.dart`, `test/widgets/feed/feed_list_test.dart`, `test/goldens/feed/feed_breakpoints_golden_test.dart`, and `integration_test/feed_flow_test.dart` document expected behaviour and visual baselines.
+
+## Detail Module Notes (US2)
+- Entry point: `RecipeDetailScreen` (`lib/features/detail/ui/recipe_detail_screen.dart`) consumes `recipeDetailControllerProvider` and renders responsive sections (hero image, ingredients, instructions, nutrition, transcript).
+- Repository: `RecipeDetailRepository` (`lib/features/detail/data/recipe_detail_repository.dart`) maps API DTOs into domain objects and caches results; includes curated fallback samples for offline/local demo.
+- State: `RecipeDetailController` + `RecipeDetailState` auto-load on navigation and recover from errors with retry.
+- UI widgets: `IngredientList`, `InstructionSteps`, and `DetailActionBar` deliver accessible layouts with copy/share affordances.
+- Navigation: Feed cards trigger `context.pushNamed(RecipeDetailScreen.routeName, id)` enabling deep-link friendly routes (`/recipes/:id`).

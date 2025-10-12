@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:viral_recipes_app/features/detail/ui/recipe_detail_screen.dart';
 import 'package:viral_recipes_app/features/feed/data/feed_models.dart';
 import 'package:viral_recipes_app/shared/design_system/tokens.dart';
 
@@ -13,8 +15,10 @@ class ViralRecipeCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
+      child: InkWell(
+        onTap: () => _openDetail(context),
+        child: Column(
+          children: [
           AspectRatio(
             aspectRatio: 16 / 9,
             child: CachedNetworkImage(
@@ -108,7 +112,15 @@ class ViralRecipeCard extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
+    );
+  }
+
+  void _openDetail(BuildContext context) {
+    context.pushNamed(
+      RecipeDetailScreen.routeName,
+      pathParameters: {'id': recipe.id},
     );
   }
 

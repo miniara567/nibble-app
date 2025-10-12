@@ -95,13 +95,13 @@ description: "Task list for Viral Recipe Aggregation MVP implementation"
 
 ### Implementation for User Story 2
 
-- T030 [ ] [US2] Implement detail repository (`lib/features/detail/data/recipe_detail_repository.dart`) consuming `/recipes/{id}` and `/recipes/{id}/transcript`.
-- T031 [ ] [US2] Create detail controller (`lib/features/detail/state/recipe_detail_controller.dart`) managing state, transcript toggles, and telemetry.
+- T030 [x] [US2] Implement detail repository (`lib/features/detail/data/recipe_detail_repository.dart`) consuming `/recipes/{id}` and `/recipes/{id}/transcript`.
+- T031 [x] [US2] Create detail controller (`lib/features/detail/state/recipe_detail_controller.dart`) managing state, transcript toggles, and telemetry.
 - T032 [P] [US2] Build recipe detail screen (`lib/features/detail/ui/recipe_detail_screen.dart`) supporting responsive layout and transcript/caption sections.
 - T033 [P] [US2] Implement ingredient + instruction widgets (`lib/features/detail/ui/widgets/ingredient_list.dart`, `lib/features/detail/ui/widgets/instruction_steps.dart`).
 - T034 [P] [US2] Add share/copy action bar (`lib/features/detail/ui/widgets/detail_action_bar.dart`) with clipboard + share sheet integrations.
-- T035 [ ] [US2] Update analytics service to record detail events (open, share, video_play) and ensure Remote Config fallback messaging.
-- T036 [ ] [US2] Expand documentation in `docs/viral_recipe_aggregation/README.md` with detail view flows, accessibility notes, and telemetry mapping.
+- T035 [x] [US2] Update analytics service to record detail events (open, share, video_play) and ensure Remote Config fallback messaging.
+- T036 [x] [US2] Expand documentation in `docs/viral_recipe_aggregation/README.md` with detail view flows, accessibility notes, and telemetry mapping.
 
 **Checkpoint**: User Story 2 should now deliver a fully detailed recipe experience and remain independently testable.
 
