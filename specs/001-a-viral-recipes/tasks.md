@@ -115,20 +115,20 @@ description: "Task list for Viral Recipe Aggregation MVP implementation"
 
 ### Tests for User Story 3 (write before implementation) ⚠️
 
-- T037 [P] [US3] Create unit tests for submission validators and repository interactions in `test/unit/submission/submission_repository_test.dart`.
-- T038 [P] [US3] Add widget tests for submission form accessibility and error states in `test/widgets/submission/submission_form_test.dart`.
-- T039 [P] [US3] Produce golden tests for submission + status views in `test/goldens/submission/submission_states_golden_test.dart` with assets under `goldens/submission/`.
-- T040 [P] [US3] Develop integration test verifying submission lifecycle and polling in `integration_test/submission_flow_test.dart`.
+- T037 [P] [x] [US3] Create unit tests for submission validators and repository interactions in `test/unit/submission/submission_repository_test.dart`.
+- T038 [P] [x] [US3] Add widget tests for submission form accessibility and error states in `test/widgets/submission/submission_form_test.dart`.
+- T039 [P] [x] [US3] Produce golden tests for submission + status views in `test/goldens/submission/submission_states_golden_test.dart` with assets under `goldens/submission/`.
+- T040 [P] [x] [US3] Develop integration test verifying submission lifecycle and polling in `integration_test/submission_flow_test.dart`.
 
 ### Implementation for User Story 3
 
-- T041 [ ] [US3] Implement submission repository (`lib/features/submission/data/submission_repository.dart`) for `/submissions` POST + `/submissions/{id}` GET polling.
-- T042 [ ] [US3] Build validators + supported platform rules (`lib/features/submission/data/submission_validator.dart`).
-- T043 [ ] [US3] Create submission controller (`lib/features/submission/state/submission_controller.dart`) handling status updates, polling cadence, and telemetry.
-- T044 [P] [US3] Implement submission screen (`lib/features/submission/ui/submission_screen.dart`) with responsive layout and informative messaging.
-- T045 [P] [US3] Build submission status list widget (`lib/features/submission/ui/widgets/submission_status_list.dart`) showing pending/complete/failed states.
-- T046 [ ] [US3] Wire analytics + Remote Config (toggle fallback) for submission flows in `submission_controller.dart`.
-- T047 [ ] [US3] Update `docs/viral_recipe_aggregation/README.md` with submission workflow instructions, validation rules, and QA expectations.
+- T041 [x] [US3] Implement submission repository (`lib/features/submission/data/submission_repository.dart`) for `/submissions` POST + `/submissions/{id}` GET polling.
+- T042 [x] [US3] Build validators + supported platform rules (`lib/features/submission/data/submission_validator.dart`).
+- T043 [x] [US3] Create submission controller (`lib/features/submission/state/submission_controller.dart`) handling status updates, polling cadence, and telemetry.
+- T044 [P] [x] [US3] Implement submission screen (`lib/features/submission/ui/submission_screen.dart`) with responsive layout and informative messaging.
+- T045 [P] [x] [US3] Build submission status list widget (`lib/features/submission/ui/widgets/submission_status_list.dart`) showing pending/complete/failed states.
+- T046 [x] [US3] Wire analytics + Remote Config (toggle fallback) for submission flows in `submission_controller.dart`.
+- T047 [x] [US3] Update `docs/viral_recipe_aggregation/README.md` with submission workflow instructions, validation rules, and QA expectations.
 
 **Checkpoint**: User Story 3 completed—submission pipeline, UI, and tests are independently verifiable.
 

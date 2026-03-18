@@ -30,3 +30,10 @@ Additional implementation details will be appended as features evolve.
 - State: `RecipeDetailController` + `RecipeDetailState` auto-load on navigation and recover from errors with retry.
 - UI widgets: `IngredientList`, `InstructionSteps`, and `DetailActionBar` deliver accessible layouts with copy/share affordances.
 - Navigation: Feed cards trigger `context.pushNamed(RecipeDetailScreen.routeName, id)` enabling deep-link friendly routes (`/recipes/:id`).
+
+## Submission Module Notes (US3)
+- Entry point: `SubmissionScreen` (`lib/features/submission/ui/submission_screen.dart`) combines the submission form and status list within responsive layout.
+- Validation: `SubmissionValidator` restricts URLs to supported social platforms and enforces `https://` links.
+- Repository: `SubmissionRepository` handles POST + GET requests, feature flag checks, analytics logging, and graceful fallbacks for failures.
+- State: `SubmissionController` manages current submissions, queues pollers every 15 seconds, and cancels when work completes.
+- UI components: `SubmissionStatusList` renders status icons/messages; copy + reset controls baked into the form.
